@@ -10,4 +10,4 @@ jobs:
       - name: install
         run: yarn
       - name: jest
-        run: yarn test
+        run: TZ=Asia/Tokyo yarn test
