@@ -1,0 +1,24 @@
+{
+  "name": "ddd-calender",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest",
+    "test:watch": "jest --watch"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/jest": "^28.0.0",
+    "@types/node": "^22.10.2",
+    "jest": "^28.0.0",
+    "ts-jest": "^28.0.0",
+    "typescript": "^5.7.2"
+  },
+  "dependencies": {
+    "date-fns": "^4.1.0",
+    "date-fns-tz": "^3.2.0"
+  }
+}
