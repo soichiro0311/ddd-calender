@@ -1,7 +1,13 @@
+name: "CI/CD"
+on: [push]
 jobs:
-  # "my_first_job"というジョブIDでジョブを定義
-  my_first_job:
-    name: My first job
-  # "my_second_job"というジョブIDでジョブを定義
-  my_second_job:
-    name: My second job
+  command:
+    name: Test
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: install
+        run: yarn
+      - name: jest
+        run: yarn test
