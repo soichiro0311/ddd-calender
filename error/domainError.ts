@@ -7,5 +7,4 @@ export class DomainError implements Error {
         this.name = name;
         this.message = message;
     }
-
 } 
