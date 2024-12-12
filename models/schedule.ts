@@ -28,8 +28,8 @@ export class Schedule {
 
     private validateScheduleDuration(startDatetime: Date, endDatetime: Date) {
         if (!isBefore(startDatetime, endDatetime)) {
-            const startDatetimeStr = format(startDatetime, "yyyy-MM-dd HH:mm:ss");
-            const endDatetimeStr = format(endDatetime, "yyyy-MM-dd HH:mm:ss");
+            const startDatetimeStr = format(startDatetime, "yyyy-MM-dd HH:mm");
+            const endDatetimeStr = format(endDatetime, "yyyy-MM-dd HH:mm");
             throw new DomainError("Domain", `予定開始日時は予定終了日時より前に設定する必要があります startDatetime: ${startDatetimeStr} endDatetime: ${endDatetimeStr}`)
         }
     }
