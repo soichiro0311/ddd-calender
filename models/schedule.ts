@@ -1,4 +1,4 @@
-import { isBefore, format } from "../node_modules/date-fns";
+import { isBefore, format } from "date-fns";
 import { DomainError } from "../error/domainError";
 
 export class Schedule {
@@ -18,12 +18,12 @@ export class Schedule {
         return this._title
     }
 
-    startDatetime(): Date {
-        return this._startDatetime
+    startDatetime(): string {
+        return format(this._startDatetime, "yyyy-MM-dd HH:mm");
     }
 
-    endDatetime(): any {
-        return this._endDatetime
+    endDatetime(): string {
+        return format(this._endDatetime, "yyyy-MM-dd HH:mm");
     }
 
     private validateScheduleDuration(startDatetime: Date, endDatetime: Date) {
