@@ -17,6 +17,7 @@ export class ScheduleRepositoryImpl implements ScheduleRepository {
     async save(schedule: Schedule) {
         await this.prisma.schedule.create({
             data: {
+                id: schedule.id(),
                 title: schedule.title(),
                 startDatetime: schedule.startDatetime(),
                 endDatetime: schedule.endDatetime(),
