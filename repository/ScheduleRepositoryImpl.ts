@@ -3,6 +3,10 @@ import { PrismaClient } from '.prisma/client';
 import { Schedule } from '../models/schedule';
 import { convertSchedule } from './converter/scheduleConverter';
 
+import 'reflect-metadata';
+import { injectable } from '../node_modules/inversify/lib/cjs/annotation/injectable';
+
+@injectable()
 export class ScheduleRepositoryImpl implements ScheduleRepository {
     private prisma: PrismaClient;
 
@@ -20,13 +24,10 @@ export class ScheduleRepositoryImpl implements ScheduleRepository {
         })
     }
 
-    async list(): Promise<Schedule> {
+    async list(): Promise<Schedule[]> {
         return this.prisma.schedule.findMany().then((scheduleData: any) => {
             const result = scheduleData.map((data: any) => convertSchedule(data))
             return result
         })
     }
-
 }
-
-export const ScheduleRepositoryImplInstance: ScheduleRepositoryImpl = new ScheduleRepositoryImpl();
