@@ -2,7 +2,6 @@ import { ScheduleRepository } from './interface/scheduleRepository';
 import { Schedule } from '../models/schedule';
 import { CreateScheduleRequest } from './dto/createScheduleRequest';
 import { UserRepository } from './interface/UserRepository';
-import { User } from '../models/User';
 import { DomainError } from '../error/domainError';
 
 export const createSchedule = (scheduleRepository: ScheduleRepository, userRepository: UserRepository, createSchduleDto: CreateScheduleRequest) => {

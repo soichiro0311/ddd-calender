@@ -42,4 +42,8 @@ export class UserRepositoryImpl implements UserRepository {
             return User.fromRepostioryData(result)
         })
     }
+
+    clear(): void {
+        throw new Error("Method not implemented.");
+    }
 }

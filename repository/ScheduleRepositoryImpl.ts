@@ -8,6 +8,7 @@ import { injectable } from '../node_modules/inversify/lib/cjs/annotation/injecta
 
 @injectable()
 export class ScheduleRepositoryImpl implements ScheduleRepository {
+
     private prisma: PrismaClient;
 
     constructor() {
@@ -53,5 +54,9 @@ export class ScheduleRepositoryImpl implements ScheduleRepository {
             const result = scheduleData.map((data: any) => convertSchedule(data))
             return result
         })
+    }
+
+    clear(): void {
+        throw new Error("Method not implemented.");
     }
 }

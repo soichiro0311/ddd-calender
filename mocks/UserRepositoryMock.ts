@@ -22,4 +22,8 @@ export class UserRepositoryMock implements UserRepository {
             resolve(this.dataStore.find(user => user.id() === id)!);
         })
     }
+
+    clear(): void {
+        this.dataStore = []
+    }
 }

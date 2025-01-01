@@ -15,4 +15,8 @@ export class ScheduleRepositoryMock implements ScheduleRepository {
     async list(): Promise<Schedule[]> {
         return this.dataStore
     }
+
+    clear(): void {
+        this.dataStore = []
+    }
 }

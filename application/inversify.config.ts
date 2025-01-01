@@ -9,7 +9,7 @@ import { UserRepositoryMock } from "../mocks/UserRepositoryMock";
 import { UserRepositoryImpl } from "../repository/UserRepositoryImpl";
 
 const myContainer = new Container();
-myContainer.bind<ScheduleRepository>(TYPES.ScheduleRepository).to(process.env.NODE_ENV === "test" ? ScheduleRepositoryMock : ScheduleRepositoryImpl);
-myContainer.bind<UserRepository>(TYPES.UserRepository).to(process.env.NODE_ENV === "test" ? UserRepositoryMock : UserRepositoryImpl);
+myContainer.bind<ScheduleRepository>(TYPES.ScheduleRepository).to(process.env.NODE_ENV === "test" ? ScheduleRepositoryMock : ScheduleRepositoryImpl).inSingletonScope();
+myContainer.bind<UserRepository>(TYPES.UserRepository).to(process.env.NODE_ENV === "test" ? UserRepositoryMock : UserRepositoryImpl).inSingletonScope();
 
 export { myContainer };
