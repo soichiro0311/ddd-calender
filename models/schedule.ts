@@ -4,6 +4,7 @@ import { v4 as uuidv4 } from '../node_modules/uuid/dist/cjs';
 import { User } from "./User";
 
 export class Schedule {
+
     private _id: string
     private _title: string;
     private _startDatetime: Date;
@@ -20,11 +21,17 @@ export class Schedule {
     }
 
     static new(title: string, startDatetime: Date, endDatetime: Date, participants: User[]) {
-        return new Schedule(title, startDatetime, endDatetime, uuidv4(), participants)
+        const scheduleId = uuidv4()
+        return new Schedule(title, startDatetime, endDatetime, scheduleId, this.assignParticipants(scheduleId, participants))
     }
 
     static fromRepostioryData(title: string, startDatetime: Date, endDatetime: Date, id: string, participants: User[]) {
         return new Schedule(title, startDatetime, endDatetime, id, participants)
+    }
+
+    static assignParticipants(scheduleId: string, participants: User[]): User[] {
+        participants.forEach(participant => participant.assign(scheduleId))
+        return participants
     }
 
     title(): string {

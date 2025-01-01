@@ -15,47 +15,39 @@ export class ScheduleRepositoryImpl implements ScheduleRepository {
     }
 
     async save(schedule: Schedule) {
-        if (schedule.participants() == null || schedule.participants().length == 0) {
-            await this.prisma.schedule.create({
+        await this.prisma.schedule.create({
+            data: {
+                id: schedule.id(),
+                title: schedule.title(),
+                startDatetime: schedule.startDatetime(),
+                endDatetime: schedule.endDatetime(),
+            },
+        })
+        schedule.participants().forEach(async participant => {
+            await this.prisma.user.update({
+                where: { id: participant.id() },
                 data: {
-                    id: schedule.id(),
-                    title: schedule.title(),
-                    startDatetime: schedule.startDatetime(),
-                    endDatetime: schedule.endDatetime(),
-                    participants: {
-                        create: schedule.participants().map(participant => {
-                            return {
-                                id: participant.id(),
-                                name: participant.name()
-                            }
-                        })
+                    schedules: {
+                        create: {
+                            schedule: {
+                                connect: { id: schedule.id() },
+                            },
+                            participationStatus: participant.status(schedule.id())
+                        },
                     },
                 },
             })
-        } else {
-            schedule.participants().forEach(async participant => {
-                console.log(participant.id())
-                await this.prisma.user.update({
-                    where: { id: participant.id() },
-                    data: {
-                        schedules: {
-                            create: {
-                                id: schedule.id(),
-                                title: schedule.title(),
-                                startDatetime: schedule.startDatetime(),
-                                endDatetime: schedule.endDatetime(),
-                            },
-                        },
-                    },
-                })
-            })
-        }
+        })
     }
 
     async list(): Promise<Schedule[]> {
         return this.prisma.schedule.findMany({
             include: {
-                participants: true,
+                participants: {
+                    include: {
+                        user: true
+                    }
+                }
             },
         }).then((scheduleData: any) => {
             const result = scheduleData.map((data: any) => convertSchedule(data))

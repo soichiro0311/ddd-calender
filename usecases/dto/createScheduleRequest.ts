@@ -8,7 +8,7 @@ export class CreateScheduleRequest {
         this._title = requestJson.body.title
         this._startDatetime = requestJson.body.startDatetime
         this._endDatetime = requestJson.body.endDatetime
-        this._participants = requestJson.body.participants
+        this._participants = requestJson.body.participants ? requestJson.body.participants : []
     }
 
     title() {

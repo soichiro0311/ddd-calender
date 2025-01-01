@@ -23,7 +23,11 @@ export class UserRepositoryImpl implements UserRepository {
     }
 
     async list(): Promise<User[]> {
-        return this.prisma.user.findMany().then((users: any) => {
+        return this.prisma.user.findMany({
+            include: {
+                schedules: true
+            }
+        }).then((users: any) => {
             const result = users.map((data: any) => User.fromRepostioryData(data))
             return result
         })
