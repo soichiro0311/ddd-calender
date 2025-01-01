@@ -7,6 +7,7 @@ import { ScheduleRepository } from '../../usecases/interface/scheduleRepository'
 import { TYPES } from '../../application/types';
 import { DomainError } from '../../error/domainError';
 import { UserRepository } from '../../usecases/interface/UserRepository';
+import { ScheduleDto } from './ScheduleDto';
 
 const scheduleRepository = myContainer.get<ScheduleRepository>(TYPES.ScheduleRepository)
 const userRepository = myContainer.get<UserRepository>(TYPES.UserRepository)
@@ -25,6 +26,7 @@ export const createSchdule = (request: any, response: any) => {
 
 export const allSchedules = (_: any, response: any) => {
     listSchdule(scheduleRepository).then(allSchedules => {
-        response.status(200).send(allSchedules)
+        const scheduleDto = allSchedules.map(schedule => new ScheduleDto(schedule))
+        response.status(200).send(scheduleDto)
     })
 };

@@ -5,6 +5,7 @@ import { UserRepository } from "../../usecases/interface/UserRepository";
 import { TYPES } from "../../application/types";
 import { ScheduleRepository } from '../../usecases/interface/scheduleRepository';
 import { ParticipationStatus } from "../../models/ParticipationStatus";
+import { ScheduleDto } from '../../presentation/rest/ScheduleDto';
 
 
 describe("予定追加ユースケース", () => {
@@ -21,12 +22,12 @@ describe("予定追加ユースケース", () => {
         });
 
         const response = await request.get("/schedule");
-        const createdSchedule = response.body[0]
+        const createdSchedule = response.body[0] as ScheduleDto
         expect(response.status).toBe(200);
         expect(response.body.length).toEqual(1);
-        expect(createdSchedule._title).toEqual("詳細設計レビュー");
-        expect(createdSchedule._startDatetime).toEqual("2024-12-11T03:00:00.000Z");
-        expect(createdSchedule._endDatetime).toEqual("2024-12-11T04:00:00.000Z");
+        expect(createdSchedule.title).toEqual("詳細設計レビュー");
+        expect(createdSchedule.startDatetime).toEqual("2024-12-11 12:00");
+        expect(createdSchedule.endDatetime).toEqual("2024-12-11 13:00");
     });
     it("予定の開始時間を終了時間と同じにしている場合、エラーが返却されること", async () => {
         const request = supertest(server);
@@ -55,13 +56,13 @@ describe("予定追加ユースケース", () => {
 
         const response = await request.get("/schedule");
 
-        const createdSchedule = response.body[0]
+        const createdSchedule = response.body[0] as ScheduleDto
         expect(response.status).toBe(200);
         expect(response.body.length).toEqual(1);
-        expect(createdSchedule._title).toEqual("詳細設計レビュー");
-        expect(createdSchedule._startDatetime).toEqual("2024-12-11T03:00:00.000Z");
-        expect(createdSchedule._endDatetime).toEqual("2024-12-11T04:00:00.000Z");
-        expect(createdSchedule._participants[0]._name).toEqual("テスト太郎");
-        expect(createdSchedule._participants[0]._status[0]._status).toEqual(ParticipationStatus.NOT_RESPOND);
+        expect(createdSchedule.title).toEqual("詳細設計レビュー");
+        expect(createdSchedule.startDatetime).toEqual("2024-12-11 12:00");
+        expect(createdSchedule.endDatetime).toEqual("2024-12-11 13:00");
+        expect(createdSchedule.participants[0].name).toEqual("テスト太郎");
+        expect(createdSchedule.participants[0].participationStatus).toEqual(ParticipationStatus.NOT_RESPOND);
     });
 });
