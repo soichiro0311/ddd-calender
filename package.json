@@ -9,7 +9,8 @@
     "test:watch": "jest --watch",
     "prisma:generate": "./node_modules/.bin/prisma generate",
     "prisma:migrate": "./node_modules/.bin/prisma migrate deploy",
-    "prisma:seed": "./node_modules/.bin/prisma db seed"
+    "prisma:seed": "./node_modules/.bin/prisma db seed",
+    "prisma:create-migrate": "prisma migrate dev --name ${0}"
   },
   "keywords": [],
   "author": "",

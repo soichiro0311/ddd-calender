@@ -1,5 +1,5 @@
 import supertest from "supertest";
-import { server } from "../../application";
+import { server } from "../../application/route";
 
 
 describe("予定追加ユースケース", () => {

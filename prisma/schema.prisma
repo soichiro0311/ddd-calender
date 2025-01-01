@@ -22,3 +22,10 @@ model Schedule {
   startDatetime   String
   endDatetime   String
 }
+
+model User {
+  id        String   @db.VarChar(255) @id
+  name     String   @db.VarChar(255)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
