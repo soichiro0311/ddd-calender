@@ -6,13 +6,15 @@ import { myContainer } from '../../application/inversify.config';
 import { ScheduleRepository } from '../../usecases/interface/scheduleRepository';
 import { TYPES } from '../../application/types';
 import { DomainError } from '../../error/domainError';
+import { UserRepository } from '../../usecases/interface/UserRepository';
 
-const repository = myContainer.get<ScheduleRepository>(TYPES.ScheduleRepository)
+const scheduleRepository = myContainer.get<ScheduleRepository>(TYPES.ScheduleRepository)
+const userRepository = myContainer.get<UserRepository>(TYPES.UserRepository)
 
 export const createSchdule = (request: any, response: any) => {
     try {
-        const schedule = convertSchedule(request);
-        createSchedule(repository, schedule)
+        const createSchduleDto = convertSchedule(request);
+        createSchedule(scheduleRepository, userRepository, createSchduleDto)
         response.status(200).end()
     } catch (e) {
         if (e instanceof DomainError) {
@@ -22,7 +24,7 @@ export const createSchdule = (request: any, response: any) => {
 };
 
 export const allSchedules = (_: any, response: any) => {
-    listSchdule(repository).then(allSchedules => {
+    listSchdule(scheduleRepository).then(allSchedules => {
         response.status(200).send(allSchedules)
     })
 };

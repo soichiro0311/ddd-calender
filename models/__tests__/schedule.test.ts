@@ -7,7 +7,7 @@ describe("スケジュールを作成する", () => {
         const startDatetime = parse('2024-11-22 15:00', 'yyyy-MM-dd HH:mm', new Date());
         const endDatetime = parse('2024-11-22 16:00', 'yyyy-MM-dd HH:mm', new Date());
 
-        const schedule = Schedule.new("要件定義ウォークスルー", startDatetime, endDatetime)
+        const schedule = Schedule.new("要件定義ウォークスルー", startDatetime, endDatetime, [])
         expect("要件定義ウォークスルー").toBe(schedule.title())
         expect(schedule.startDatetime()).toBe('2024-11-22 15:00')
         expect(schedule.endDatetime()).toBe('2024-11-22 16:00')
@@ -18,7 +18,7 @@ describe("スケジュールを作成する", () => {
             const endDatetime = parse('2024-11-22 10:00', 'yyyy-MM-dd HH:mm', new Date());
 
             try {
-                Schedule.new("要件定義ウォークスルー", startDatetime, endDatetime);
+                Schedule.new("要件定義ウォークスルー", startDatetime, endDatetime, []);
                 fail();
             } catch (e) {
                 const error = e as DomainError;
@@ -30,7 +30,7 @@ describe("スケジュールを作成する", () => {
             const endDatetime = parse('2024-11-22 10:00', 'yyyy-MM-dd HH:mm', new Date());
 
             try {
-                Schedule.new("要件定義ウォークスルー", startDatetime, endDatetime);
+                Schedule.new("要件定義ウォークスルー", startDatetime, endDatetime, []);
                 fail();
             } catch (e) {
                 const error = e as DomainError;

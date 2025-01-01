@@ -1,9 +1,5 @@
-import { Schedule } from "../../../models/schedule";
+import { CreateScheduleRequest } from "../../../usecases/dto/createScheduleRequest";
 
 export const convertSchedule = (requestJson: any) => {
-    const title = requestJson.body.title
-    const startDatetime = requestJson.body.startDatetime
-    const endDatetime = requestJson.body.endDatetime
-    const schedule = Schedule.new(title, startDatetime, endDatetime);
-    return schedule;
+    return new CreateScheduleRequest(requestJson);
 }

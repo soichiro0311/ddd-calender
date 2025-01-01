@@ -6,6 +6,7 @@ import { User } from '../models/User';
 
 @injectable()
 export class UserRepositoryMock implements UserRepository {
+
     private dataStore: Array<User> = []
 
     async save(user: User) {
@@ -14,5 +15,11 @@ export class UserRepositoryMock implements UserRepository {
 
     async list(): Promise<User[]> {
         return this.dataStore
+    }
+
+    findById(id: string): Promise<User> {
+        return new Promise((resolve, reject) => {
+            resolve(this.dataStore.find(user => user.id() === id)!);
+        })
     }
 }

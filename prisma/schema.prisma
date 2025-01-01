@@ -19,6 +19,7 @@ model Schedule {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   title     String   @db.VarChar(255)
+  participants User[]
   startDatetime   String
   endDatetime   String
 }
@@ -26,6 +27,7 @@ model Schedule {
 model User {
   id        String   @db.VarChar(255) @id
   name     String   @db.VarChar(255)
+  schedules Schedule[]
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
