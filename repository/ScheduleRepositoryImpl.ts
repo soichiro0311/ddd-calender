@@ -5,6 +5,7 @@ import { convertSchedule } from './converter/scheduleConverter';
 
 import 'reflect-metadata';
 import { injectable } from '../node_modules/inversify/lib/cjs/annotation/injectable';
+import { User } from '../models/User';
 
 @injectable()
 export class ScheduleRepositoryImpl implements ScheduleRepository {
@@ -53,6 +54,20 @@ export class ScheduleRepositoryImpl implements ScheduleRepository {
         }).then((scheduleData: any) => {
             const result = scheduleData.map((data: any) => convertSchedule(data))
             return result
+        })
+    }
+
+    async updateParticipationStatus(scheduleId: string, updatedUser: User): Promise<void> {
+        await this.prisma.userOnSchedule.update({
+            where: {
+                scheduleId_userId: {
+                    userId: updatedUser.id(),
+                    scheduleId: scheduleId
+                }
+            },
+            data: {
+                participationStatus: updatedUser.status(scheduleId)
+            },
         })
     }
 

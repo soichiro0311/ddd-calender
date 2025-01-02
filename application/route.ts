@@ -1,5 +1,5 @@
 import express from "express";
-import { allSchedules, createSchdule } from "../presentation/rest/schduleController";
+import { allSchedules, createSchdule, updateParticipationStatus } from "../presentation/rest/schduleController";
 import { allUsers, createUser } from '../presentation/rest/userController';
 
 
@@ -12,6 +12,7 @@ server.use(express.urlencoded({
 
 server.get("/schedule", allSchedules)
 server.post("/schedule", createSchdule)
+server.post("/schedule/status", updateParticipationStatus)
 
 server.get("/user", allUsers)
 server.post("/user", createUser)

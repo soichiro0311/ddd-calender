@@ -4,7 +4,6 @@ import { ScheduleParticipationStatus } from './ScheduleParticipationStatus';
 import { DomainError } from '../error/domainError';
 
 export class User {
-
     private _name: string;
     private _id: string
     private _status: ScheduleParticipationStatus[]
@@ -38,6 +37,15 @@ export class User {
 
     assign(scheduleId: string): void {
         this._status.push(new ScheduleParticipationStatus(scheduleId, ParticipationStatus.NOT_RESPOND))
+    }
+
+    respondToSchedule(scheduleId: string, updatedStatus: ParticipationStatus): void {
+        const targetScheduleParticipationStatus = this._status.find(status => status.scheduleId() === scheduleId)
+        if (targetScheduleParticipationStatus == null) {
+            // TODO: エラー処理
+            throw new DomainError("", "");
+        }
+        targetScheduleParticipationStatus.update(updatedStatus)
     }
 
 

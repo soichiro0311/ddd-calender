@@ -8,6 +8,8 @@ import { TYPES } from '../../application/types';
 import { DomainError } from '../../error/domainError';
 import { UserRepository } from '../../usecases/interface/UserRepository';
 import { ScheduleDto } from './ScheduleDto';
+import { UpdateParticipationStatusRequest } from '../../usecases/dto/updateParticipationStatusRequest';
+import { respondToSchedule } from '../../usecases/respondToSchedule';
 
 const scheduleRepository = myContainer.get<ScheduleRepository>(TYPES.ScheduleRepository)
 const userRepository = myContainer.get<UserRepository>(TYPES.UserRepository)
@@ -16,6 +18,18 @@ export const createSchdule = (request: any, response: any) => {
     try {
         const createSchduleDto = convertSchedule(request);
         createSchedule(scheduleRepository, userRepository, createSchduleDto)
+        response.status(200).end()
+    } catch (e) {
+        if (e instanceof DomainError) {
+            response.status(400).send({ errorMessage: e.message })
+        }
+    }
+};
+
+export const updateParticipationStatus = (request: any, response: any) => {
+    try {
+        const updateParticipationStatusRequest = new UpdateParticipationStatusRequest(request);
+        respondToSchedule(scheduleRepository, userRepository, updateParticipationStatusRequest)
         response.status(200).end()
     } catch (e) {
         if (e instanceof DomainError) {

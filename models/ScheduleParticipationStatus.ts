@@ -16,4 +16,9 @@ export class ScheduleParticipationStatus {
     participationStatus(): ParticipationStatus {
         return this._status
     }
+
+    update(updatedStatus: ParticipationStatus): void {
+        this._status = updatedStatus
+    }
+
 }
