@@ -15,22 +15,27 @@ export class User {
     }
 
     static fromRepostioryData(repositoryData: any): User {
-        const status = repositoryData.schedules.map((schedule: any) => {
+        const status = repositoryData.schedules ? repositoryData.schedules.map((schedule: any) => {
             return new ScheduleParticipationStatus(schedule.scheduleId, schedule.participationStatus)
-        })
+        }) : []
         return new User(repositoryData.id, repositoryData.name, status)
     }
+
+    static fromScheduleRepostioryData(repositoryData: any): any {
+        return new User(repositoryData.user.id, repositoryData.user.name, [new ScheduleParticipationStatus(repositoryData.scheduleId, repositoryData.participationStatus)])
+    }
+
 
     static new(name: string): User {
         const id = uuidv4()
         return new User(id, name, [])
     }
 
-    status(scheduleId: string): ParticipationStatus {
+    status(scheduleId: string): ParticipationStatus | null {
         const targetScheduleStatus = this._status.find(status => status.scheduleId() === scheduleId)
+
         if (targetScheduleStatus == null) {
-            // TODO: エラー処理をやる
-            throw new DomainError("", "")
+            return null
         }
         return targetScheduleStatus.participationStatus()
     }

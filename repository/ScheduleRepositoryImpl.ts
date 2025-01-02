@@ -6,6 +6,7 @@ import { convertSchedule } from './converter/scheduleConverter';
 import 'reflect-metadata';
 import { injectable } from '../node_modules/inversify/lib/cjs/annotation/injectable';
 import { User } from '../models/User';
+import { DomainError } from '../error/domainError';
 
 @injectable()
 export class ScheduleRepositoryImpl implements ScheduleRepository {
@@ -26,6 +27,11 @@ export class ScheduleRepositoryImpl implements ScheduleRepository {
             },
         })
         schedule.participants().forEach(async participant => {
+            const status = participant.status(schedule.id())
+            if (status == null) {
+                // TODO: エラー処理の追加
+                throw new DomainError("", "")
+            }
             await this.prisma.user.update({
                 where: { id: participant.id() },
                 data: {
@@ -34,7 +40,7 @@ export class ScheduleRepositoryImpl implements ScheduleRepository {
                             schedule: {
                                 connect: { id: schedule.id() },
                             },
-                            participationStatus: participant.status(schedule.id())
+                            participationStatus: status
                         },
                     },
                 },
@@ -58,6 +64,11 @@ export class ScheduleRepositoryImpl implements ScheduleRepository {
     }
 
     async updateParticipationStatus(scheduleId: string, updatedUser: User): Promise<void> {
+        const updatedStatus = updatedUser.status(scheduleId)
+        if (updatedStatus == null) {
+            // TODO: エラー処理の追加
+            throw new DomainError("", "")
+        }
         await this.prisma.userOnSchedule.update({
             where: {
                 scheduleId_userId: {
@@ -66,7 +77,7 @@ export class ScheduleRepositoryImpl implements ScheduleRepository {
                 }
             },
             data: {
-                participationStatus: updatedUser.status(scheduleId)
+                participationStatus: updatedStatus
             },
         })
     }

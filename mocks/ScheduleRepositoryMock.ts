@@ -25,7 +25,7 @@ export class ScheduleRepositoryMock implements ScheduleRepository {
             resolve(this.dataStore.forEach(schedule => {
                 schedule.participants().forEach(participant => {
                     if (participant.id() === updatedUser.id()) {
-                        participant.respondToSchedule(scheduleId, updatedUser.status(scheduleId))
+                        participant.respondToSchedule(scheduleId, updatedUser.status(scheduleId)!)
                     }
                 })
             }));
