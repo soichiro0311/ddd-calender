@@ -1,10 +1,9 @@
 import { Schedule } from "../../models/schedule";
-import { ParticipationStatus } from '../../models/ParticipationStatus';
-import { User } from "../../models/User";
+import { Participant } from '../../models/Participant';
 
 export interface ScheduleRepository {
     save(schedule: Schedule): Promise<void>;
     list(): Promise<Schedule[]>;
     clear(): void
-    updateParticipationStatus(scheduleId: string, updatedUser: User): Promise<void>
+    updateParticipationStatus(schedule: Participant): Promise<void>
 }

@@ -2,6 +2,7 @@ import { isBefore, format } from "date-fns";
 import { DomainError } from "../error/domainError";
 import { v4 as uuidv4 } from '../node_modules/uuid/dist/cjs';
 import { User } from "./User";
+import { Participant } from "./Participant";
 
 export class Schedule {
 
@@ -9,9 +10,9 @@ export class Schedule {
     private _title: string;
     private _startDatetime: Date;
     private _endDatetime: Date;
-    private _participants: User[];
+    private _participants: Participant[];
 
-    private constructor(title: string, startDatetime: Date, endDatetime: Date, id: string, participants: User[]) {
+    private constructor(title: string, startDatetime: Date, endDatetime: Date, id: string, participants: Participant[]) {
         this.validateScheduleDuration(startDatetime, endDatetime);
         this._id = id
         this._title = title
@@ -20,18 +21,15 @@ export class Schedule {
         this._participants = participants
     }
 
-    static new(title: string, startDatetime: Date, endDatetime: Date, participants: User[]) {
+    static new(title: string, startDatetime: Date, endDatetime: Date, participantUsers: User[]) {
         const scheduleId = uuidv4()
-        return new Schedule(title, startDatetime, endDatetime, scheduleId, this.assignParticipants(scheduleId, participants))
+        const participants = participantUsers.map(user => Participant.new(scheduleId, user.id(), user.name()))
+        return new Schedule(title, startDatetime, endDatetime, scheduleId, participants)
     }
 
-    static fromRepostioryData(title: string, startDatetime: Date, endDatetime: Date, id: string, participants: User[]) {
+    static fromRepostioryData(title: string, startDatetime: Date, endDatetime: Date, id: string, participants: Participant[]) {
+        const result = new Schedule(title, startDatetime, endDatetime, id, participants)
         return new Schedule(title, startDatetime, endDatetime, id, participants)
-    }
-
-    static assignParticipants(scheduleId: string, participants: User[]): User[] {
-        participants.forEach(participant => participant.assign(scheduleId))
-        return participants
     }
 
     title(): string {
@@ -50,7 +48,7 @@ export class Schedule {
         return this._id
     }
 
-    participants(): User[] {
+    participants(): Participant[] {
         return this._participants
     }
 

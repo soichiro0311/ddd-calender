@@ -3,9 +3,7 @@ import 'reflect-metadata';
 import { ScheduleRepository } from '../usecases/interface/scheduleRepository';
 import { Schedule } from '../models/schedule';
 import { injectable } from '../node_modules/inversify/lib/cjs/annotation/injectable';
-import { ParticipationStatus } from '../models/ParticipationStatus';
-import { User } from '../models/User';
-import { myContainer } from '../application/inversify.config';
+import { Participant } from '../models/Participant';
 
 @injectable()
 export class ScheduleRepositoryMock implements ScheduleRepository {
@@ -20,12 +18,12 @@ export class ScheduleRepositoryMock implements ScheduleRepository {
         return this.dataStore
     }
 
-    updateParticipationStatus(scheduleId: string, updatedUser: User): Promise<void> {
+    updateParticipationStatus(participant: Participant): Promise<void> {
         return new Promise((resolve, reject) => {
             resolve(this.dataStore.forEach(schedule => {
-                schedule.participants().forEach(participant => {
-                    if (participant.id() === updatedUser.id()) {
-                        participant.respondToSchedule(scheduleId, updatedUser.status(scheduleId)!)
+                schedule.participants().forEach(scheduledParticipant => {
+                    if (scheduledParticipant.userId() === participant.userId()) {
+                        participant.respondToSchedule(participant.status())
                     }
                 })
             }));

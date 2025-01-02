@@ -3,6 +3,7 @@ import { Schedule } from '../models/schedule';
 import { CreateScheduleRequest } from './dto/createScheduleRequest';
 import { UserRepository } from './interface/UserRepository';
 import { DomainError } from '../error/domainError';
+import { Participant } from '../models/Participant';
 
 export const createSchedule = (scheduleRepository: ScheduleRepository, userRepository: UserRepository, createSchduleDto: CreateScheduleRequest) => {
     if (createSchduleDto.participants() == null || createSchduleDto.participants().length == 0) {

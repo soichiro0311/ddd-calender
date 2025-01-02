@@ -5,8 +5,8 @@ import { convertSchedule } from './converter/scheduleConverter';
 
 import 'reflect-metadata';
 import { injectable } from '../node_modules/inversify/lib/cjs/annotation/injectable';
-import { User } from '../models/User';
 import { DomainError } from '../error/domainError';
+import { Participant } from '../models/Participant';
 
 @injectable()
 export class ScheduleRepositoryImpl implements ScheduleRepository {
@@ -27,20 +27,16 @@ export class ScheduleRepositoryImpl implements ScheduleRepository {
             },
         })
         schedule.participants().forEach(async participant => {
-            const status = participant.status(schedule.id())
-            if (status == null) {
-                // TODO: エラー処理の追加
-                throw new DomainError("", "")
-            }
+            console.log(participant)
             await this.prisma.user.update({
-                where: { id: participant.id() },
+                where: { id: participant.userId() },
                 data: {
                     schedules: {
                         create: {
                             schedule: {
                                 connect: { id: schedule.id() },
                             },
-                            participationStatus: status
+                            participationStatus: participant.status()
                         },
                     },
                 },
@@ -63,21 +59,18 @@ export class ScheduleRepositoryImpl implements ScheduleRepository {
         })
     }
 
-    async updateParticipationStatus(scheduleId: string, updatedUser: User): Promise<void> {
-        const updatedStatus = updatedUser.status(scheduleId)
-        if (updatedStatus == null) {
-            // TODO: エラー処理の追加
-            throw new DomainError("", "")
-        }
+    async updateParticipationStatus(participant: Participant): Promise<void> {
+
+
         await this.prisma.userOnSchedule.update({
             where: {
                 scheduleId_userId: {
-                    userId: updatedUser.id(),
-                    scheduleId: scheduleId
+                    userId: participant.userId(),
+                    scheduleId: participant.scheduleId()
                 }
             },
             data: {
-                participationStatus: updatedStatus
+                participationStatus: participant.status()
             },
         })
     }

@@ -1,4 +1,4 @@
-import { UserDto } from "./UserDto";
+import { ParticipantDto } from "./ParticipantDto";
 import { Schedule } from '../../models/schedule';
 
 export class ScheduleDto {
@@ -6,14 +6,14 @@ export class ScheduleDto {
     title: string;
     startDatetime: string
     endDatetime: string
-    participants: UserDto[];
+    participants: ParticipantDto[];
 
     constructor(model: Schedule) {
         this.id = model.id()
         this.title = model.title()
         this.startDatetime = model.startDatetime()
         this.endDatetime = model.endDatetime()
-        this.participants = model.participants().map(participant => new UserDto(participant, model.id()))
+        this.participants = model.participants().map(participant => new ParticipantDto(participant))
     }
 
 }

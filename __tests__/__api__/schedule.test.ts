@@ -62,7 +62,7 @@ describe("予定追加ユースケース", () => {
         expect(createdSchedule.title).toEqual("詳細設計レビュー");
         expect(createdSchedule.startDatetime).toEqual("2024-12-11 12:00");
         expect(createdSchedule.endDatetime).toEqual("2024-12-11 13:00");
-        expect(createdSchedule.participants[0].name).toEqual("テスト太郎");
+        expect(createdSchedule.participants[0].userName).toEqual("テスト太郎");
         expect(createdSchedule.participants[0].participationStatus).toEqual(ParticipationStatus.NOT_RESPOND);
     });
 });

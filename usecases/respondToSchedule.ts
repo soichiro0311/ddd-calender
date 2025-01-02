@@ -10,7 +10,19 @@ export const respondToSchedule = (scheduleRepository: ScheduleRepository, userRe
             // TODO: エラー処理する
             throw new DomainError("", "")
         }
-        targetUser.respondToSchedule(requestDto.scheduleId(), requestDto.updatedStatus())
-        scheduleRepository.updateParticipationStatus(requestDto.scheduleId(), targetUser)
+        scheduleRepository.list().then(allSchedules => {
+            const targetSchedule = allSchedules.find(schedule => schedule.id() === requestDto.scheduleId())
+            if (targetSchedule == null) {
+                // TODO: エラー処理する
+                throw new DomainError("", "")
+            }
+            const targetParticipant = targetSchedule.participants().find(participant => participant.userId() === requestDto.userId());
+            if (targetParticipant == null) {
+                // TODO: エラー処理する
+                throw new DomainError("", "")
+            }
+            targetParticipant.respondToSchedule(requestDto.updatedStatus())
+            scheduleRepository.updateParticipationStatus(targetParticipant)
+        })
     })
 }
