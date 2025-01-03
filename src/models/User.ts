@@ -1,4 +1,4 @@
-import { v4 as uuidv4 } from "../node_modules/uuid/dist/cjs";
+import { v4 as uuidv4 } from "../../node_modules/uuid/dist/cjs";
 
 export class User {
   private _name: string;

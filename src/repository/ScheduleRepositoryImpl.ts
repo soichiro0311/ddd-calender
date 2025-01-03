@@ -4,8 +4,7 @@ import { Schedule } from "../models/schedule";
 import { convertSchedule } from "./converter/scheduleConverter";
 
 import "reflect-metadata";
-import { injectable } from "../node_modules/inversify/lib/cjs/annotation/injectable";
-import { DomainError } from "../error/domainError";
+import { injectable } from "../../node_modules/inversify/lib/cjs/annotation/injectable";
 import { Participant } from "../models/Participant";
 
 @injectable()

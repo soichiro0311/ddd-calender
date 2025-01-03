@@ -1,5 +1,5 @@
 import "reflect-metadata";
-import { injectable } from "../node_modules/inversify/lib/cjs/annotation/injectable";
+import { injectable } from "../../node_modules/inversify/lib/cjs/annotation/injectable";
 import { UserRepository } from "../usecases/interface/UserRepository";
 import { User } from "../models/User";
 

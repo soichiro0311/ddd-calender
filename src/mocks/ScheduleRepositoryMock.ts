@@ -1,7 +1,7 @@
 import "reflect-metadata";
 import { ScheduleRepository } from "../usecases/interface/scheduleRepository";
 import { Schedule } from "../models/schedule";
-import { injectable } from "../node_modules/inversify/lib/cjs/annotation/injectable";
+import { injectable } from "../../node_modules/inversify/lib/cjs/annotation/injectable";
 import { Participant } from "../models/Participant";
 
 @injectable()

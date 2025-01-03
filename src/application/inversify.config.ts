@@ -2,7 +2,7 @@ import { TYPES } from "./types";
 import { ScheduleRepository } from "../usecases/interface/scheduleRepository";
 import { ScheduleRepositoryImpl } from "../repository/ScheduleRepositoryImpl";
 import { ScheduleRepositoryMock } from "../mocks/ScheduleRepositoryMock";
-import { Container } from "../node_modules/inversify/lib/cjs";
+import { Container } from "../../node_modules/inversify/lib/cjs";
 import { UserRepository } from "../usecases/interface/UserRepository";
 import { UserRepositoryMock } from "../mocks/UserRepositoryMock";
 import { UserRepositoryImpl } from "../repository/UserRepositoryImpl";

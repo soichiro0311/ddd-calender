@@ -1,6 +1,6 @@
 import { isBefore, format } from "date-fns";
 import { DomainError } from "../error/domainError";
-import { v4 as uuidv4 } from "../node_modules/uuid/dist/cjs";
+import { v4 as uuidv4 } from "../../node_modules/uuid/dist/cjs";
 import { User } from "./User";
 import { Participant } from "./Participant";
 
