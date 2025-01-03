@@ -1,3 +1,3 @@
 import { server } from "./route";
 
-server.listen(3000)
+server.listen(3000);

@@ -1,5 +1,5 @@
 export enum ParticipationStatus {
-    NOT_RESPOND,
-    PRESENT,
-    ABSENT
-}; 
+  NOT_RESPOND,
+  PRESENT,
+  ABSENT,
+}
